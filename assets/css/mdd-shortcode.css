@@ -1,0 +1,113 @@
+/* ショートコード用スタイル - 女性向けデザイン */
+.mdd-shop-list-container {
+    margin: 20px 0;
+    font-family: "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif;
+}
+
+.mdd-shop-card {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f0d2e0;
+    padding-bottom: 20px;
+}
+
+.mdd-shop-header {
+    margin-bottom: 10px;
+}
+
+.mdd-shop-free-tag {
+    display: inline-block;
+    background-color: #f08bb4;
+    color: white;
+    font-size: 0.8em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.mdd-shop-name {
+    display: inline;
+    font-size: 1.3em;
+    color: #d06b9a;
+    margin: 0;
+    font-weight: normal;
+}
+
+.mdd-shop-name a {
+    color: #d06b9a;
+    text-decoration: none;
+}
+
+.mdd-shop-name a:hover {
+    text-decoration: underline;
+}
+
+.mdd-shop-content {
+    margin-left: 10px;
+}
+
+.mdd-divider {
+    border: 0;
+    height: 1px;
+    background: #f0e0e9;
+    margin: 10px 0;
+}
+
+.mdd-shop-details > div {
+    margin-bottom: 5px;
+    line-height: 1.6;
+}
+
+.mdd-label {
+    color: #8e7186;
+    font-weight: normal;
+    display: inline-block;
+    width: 80px;
+}
+
+.mdd-value {
+    color: #333;
+}
+
+.mdd-shop-rating {
+    margin-bottom: 5px;
+}
+
+.mdd-star {
+    color: #ffb1d8;
+    letter-spacing: 1px;
+}
+
+.mdd-star-empty {
+    color: #f0e0e9;
+}
+
+.mdd-rating-value {
+    margin-left: 5px;
+    color: #b37a9e;
+    font-weight: bold;
+}
+
+.mdd-shop-recommended {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fdf8fb;
+    border-left: 3px solid #f8e1ee;
+}
+
+.mdd-shop-recommended h4 {
+    margin: 0 0 10px 0;
+    color: #d06b9a;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.mdd-heart-icon {
+    color: #f591bc;
+    margin-right: 5px;
+}
+
+.mdd-shop-recommended p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+}

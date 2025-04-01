@@ -1,0 +1,218 @@
+/* Multi Data Display スタイル */
+
+.mdd-shop-list {
+    margin: 20px 0;
+}
+
+.mdd-shop-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.mdd-shop-list table th,
+.mdd-shop-list table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.mdd-shop-list table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.mdd-shop-list table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.mdd-form-container {
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+.mdd-form-container .form-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mdd-form-container .form-table th {
+    width: 200px;
+    padding: 15px 10px;
+    text-align: left;
+    vertical-align: top;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.mdd-form-container .form-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.mdd-form-container input[type="text"],
+.mdd-form-container input[type="number"],
+.mdd-form-container input[type="url"],
+.mdd-form-container select {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.mdd-form-container textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.mdd-form-actions {
+    margin-top: 20px;
+}
+
+.mdd-form-actions .button {
+    margin-right: 10px;
+}
+
+/* 検索フォーム */
+.mdd-filter-form {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+.mdd-search-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.mdd-search-box input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px;
+}
+
+.mdd-search-box select {
+    min-width: 150px;
+    padding: 8px;
+}
+
+.mdd-search-status {
+    margin-bottom: 15px;
+    font-style: italic;
+    color: #666;
+}
+
+/* ページネーション */
+.mdd-pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.mdd-pagination .page-numbers {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    text-decoration: none;
+}
+
+.mdd-pagination .page-numbers.current {
+    background-color: #0073aa;
+    color: white;
+    border-color: #0073aa;
+}
+
+.mdd-pagination .button {
+    margin: 0 5px;
+}
+
+/* ナビゲーションリンク */
+.mdd-nav-links {
+    margin-bottom: 20px;
+}
+
+.mdd-actions {
+    margin-bottom: 20px;
+}
+
+/* ボタンスタイルの共通設定 */
+.button.edit-shop,
+a.button.edit-shop,
+.button.button-secondary.edit-shop,
+.button.delete-shop,
+input.button.delete-shop,
+.button.button-secondary.delete-shop {
+    display: inline-block !important;
+    padding: 5px 10px !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    background-color: #fff !important;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    font-weight: normal !important;
+    font-size: 13px !important;
+    line-height: 2 !important;
+    border-radius: 3px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+    height: auto !important;
+    margin: 0 5px 0 0 !important;
+    min-height: 30px !important;
+    min-width: 60px !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+}
+
+/* 編集ボタン用のスタイル */
+.button.edit-shop,
+a.button.edit-shop,
+.button.button-secondary.edit-shop {
+    color: #0073aa !important;
+    border-color: #0073aa !important;
+}
+
+.button.edit-shop:hover,
+a.button.edit-shop:hover,
+.button.button-secondary.edit-shop:hover {
+    background-color: #0073aa !important;
+    color: white !important;
+    border-color: #0073aa !important;
+}
+
+/* 削除ボタン用のスタイル */
+.button.delete-shop,
+input.button.delete-shop,
+.button.button-secondary.delete-shop {
+    color: #a00 !important;
+    border-color: #a00 !important;
+}
+
+.button.delete-shop:hover,
+input.button.delete-shop:hover,
+.button.button-secondary.delete-shop:hover {
+    background-color: #a00 !important;
+    color: white !important;
+    border-color: #a00 !important;
+}
+
+/* 操作ボタンの間隔を調整 */
+.mdd-shop-list .button {
+    margin-right: 5px;
+}
+
+/* 削除後の通知メッセージ */
+.notice-success {
+    border-left-color: #46b450;
+}
+
+.notice-error {
+    border-left-color: #dc3232;
+}
