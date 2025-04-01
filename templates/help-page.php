@@ -51,6 +51,97 @@ if (!defined('ABSPATH')) exit;
     </div>
 
     <div class="card">
+        <h2>CSVインポート/エクスポート機能</h2>
+        
+        <h3>1. CSVエクスポート</h3>
+        <p>
+            データをCSVファイルとしてエクスポートするには：
+        </p>
+        <ol>
+            <li>データ一覧ページで「<strong>データをCSV出力</strong>」ボタンをクリック</li>
+            <li>CSVファイルが自動的にダウンロードされます</li>
+            <li>ファイル名は「shop_export_日付_時間.csv」の形式で保存されます</li>
+        </ol>
+        <p>
+            エクスポートされたCSVファイルは、バックアップや他システムへのデータ移行に利用できます。
+        </p>
+        
+        <h3>2. CSVインポート</h3>
+        <p>
+            CSVファイルからデータをインポートするには：
+        </p>
+        <ol>
+            <li>データ一覧ページで「<strong>CSVインポート</strong>」ボタンをクリック</li>
+            <li>インポートフォームが表示されたら、以下の設定を行います：
+                <ul>
+                    <li><strong>CSVファイル</strong>：インポートするCSVファイルを選択</li>
+                    <li><strong>インポートモード</strong>：
+                        <ul>
+                            <li>追加のみ：既存データを残したまま、新しいデータのみを追加</li>
+                            <li>更新：同一surlの場合は既存データを上書き</li>
+                            <li>置換：全データを削除してからインポート</li>
+                        </ul>
+                    </li>
+                    <li><strong>1行目をヘッダーとして扱う</strong>：CSVの1行目がカラム名である場合はチェック</li>
+                </ul>
+            </li>
+            <li>「<strong>インポート</strong>」ボタンをクリックしてインポートを実行</li>
+        </ol>
+        
+        <h3>3. サンプルCSVダウンロード</h3>
+        <p>
+            正しいCSV形式を確認するには：
+        </p>
+        <ol>
+            <li>インポートフォーム内の「<strong>サンプルCSVをダウンロード</strong>」ボタンをクリック</li>
+            <li>ダウンロードされたCSVファイルを参考にして、自分のデータを作成できます</li>
+        </ol>
+        
+        <div class="notice notice-info inline">
+            <p><strong>CSVファイル形式：</strong> CSVファイルには url, sname, price, surl, area, service, copy, comment, time, tel, sogo, point, premium, type, recommended の列が必要です。surlとsnameは必須項目です。</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>画像アップロード機能</h2>
+        
+        <h3>1. 店舗画像のアップロード</h3>
+        <p>
+            各店舗データに画像を追加するには：
+        </p>
+        <ol>
+            <li>店舗データの編集画面を開きます</li>
+            <li>基本情報の下にある「<strong>店舗画像</strong>」セクションに移動</li>
+            <li>「<strong>画像ファイル</strong>」欄でアップロードする画像を選択</li>
+            <li>「<strong>16:9のアスペクト比に自動調整する</strong>」オプションを必要に応じて設定</li>
+            <li>「<strong>アップロード</strong>」ボタンをクリックして画像をアップロード</li>
+        </ol>
+        
+        <h3>2. 画像を削除する</h3>
+        <p>
+            すでにアップロードされている画像を削除するには：
+        </p>
+        <ol>
+            <li>店舗データの編集画面で「<strong>店舗画像</strong>」セクションに移動</li>
+            <li>現在の画像の下にある「<strong>画像を削除</strong>」ボタンをクリック</li>
+            <li>確認ダイアログで「OK」をクリックして削除を実行</li>
+        </ol>
+        
+        <h3>3. 画像のフロントエンドでの表示</h3>
+        <p>
+            ショートコードを使用して店舗画像を表示できます：
+        </p>
+        <code>[prefecture show_image="yes"]</code>
+        <p>
+            <code>show_image</code>パラメータは「yes」または「no」に設定可能です（デフォルトは「yes」）。
+        </p>
+        
+        <div class="notice notice-info inline">
+            <p><strong>推奨画像サイズ：</strong> 店舗画像は自動的に16:9の比率に調整されます。最適な表示結果を得るには、1280x720ピクセルの画像を使用することをお勧めします。</p>
+        </div>
+    </div>
+
+    <div class="card">
         <h2>データ構造について</h2>
         <table class="widefat striped">
             <thead>
@@ -141,6 +232,72 @@ if (!defined('ABSPATH')) exit;
     </div>
 
     <div class="card">
+        <h2>ショートコードの使い方</h2>
+        <p>WordPressの投稿や固定ページ内で店舗情報を表示するには、<code>[prefecture]</code>ショートコードを使用します。</p>
+        
+        <h3>基本的な使い方</h3>
+        <pre><code>[prefecture]</code></pre>
+        <p>これにより、デフォルト設定（最大10件）で店舗一覧が表示されます。</p>
+        
+        <h3>パラメータ一覧</h3>
+        <table class="widefat striped">
+            <thead>
+                <tr>
+                    <th>パラメータ</th>
+                    <th>説明</th>
+                    <th>例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>area</code></td>
+                    <td>エリアで絞り込み</td>
+                    <td><code>[prefecture area="東京"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>service</code></td>
+                    <td>サービスで絞り込み</td>
+                    <td><code>[prefecture service="マッサージ"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>type</code></td>
+                    <td>タイプで絞り込み (0, 1, 2)</td>
+                    <td><code>[prefecture type="1"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>premium</code></td>
+                    <td>プレミアム値で絞り込み</td>
+                    <td><code>[prefecture premium="1"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>limit</code></td>
+                    <td>表示件数（デフォルト: 10）</td>
+                    <td><code>[prefecture limit="20"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>orderby</code></td>
+                    <td>並び順のフィールド (sname, area, service, sogo, point, premium, type)</td>
+                    <td><code>[prefecture orderby="point"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>order</code></td>
+                    <td>並び順 (ASC, DESC)</td>
+                    <td><code>[prefecture orderby="point" order="DESC"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>show_image</code></td>
+                    <td>店舗画像を表示するか (yes, no)</td>
+                    <td><code>[prefecture show_image="yes"]</code></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>複合条件の例</h3>
+        <pre><code>[prefecture area="大阪" service="エステ" limit="5" orderby="point" order="DESC" show_image="yes"]</code></pre>
+        <p>この例では、大阪エリアのエステサービスを提供する店舗を、ポイントの高い順に最大5件表示します。各店舗の画像も表示されます。</p>
+    </div>
+
+    <div class="card">
         <h2>URL構造</h2>
         <ul>
             <li><code><?php echo site_url('area/list/'); ?></code> - データ一覧ページ</li>
@@ -158,9 +315,39 @@ if (!defined('ABSPATH')) exit;
     </div>
 
     <div class="card">
+        <h2>他ドメインへの移行方法</h2>
+        <p>
+            このプラグインを別のWordPressサイトに移行する場合は、以下の手順に従ってください：
+        </p>
+        <ol>
+            <li><strong>データのエクスポート</strong>: 現在のサイトで「データをCSV出力」ボタンを使用してデータをエクスポートします</li>
+            <li><strong>画像のバックアップ</strong>: wp-content/uploads/mdd-images/ ディレクトリにある画像ファイルをバックアップします</li>
+            <li><strong>プラグインのコピー</strong>: プラグインのディレクトリ全体を新しいサイトのwp-content/pluginsディレクトリにコピーします</li>
+            <li><strong>プラグインの有効化</strong>: 新しいサイトでプラグインを有効化します</li>
+            <li><strong>画像の復元</strong>: バックアップした画像ファイルを新しいサイトのwp-content/uploads/mdd-images/ディレクトリにコピーします</li>
+            <li><strong>パーマリンク設定の更新</strong>: 管理画面の「設定 > パーマリンク設定」に移動し、「変更を保存」ボタンをクリックします</li>
+            <li><strong>データのインポート</strong>: 新しいサイトでCSVインポート機能を使用して、先ほどエクスポートしたデータをインポートします</li>
+        </ol>
+    </div>
+
+    <div class="card">
         <h2>トラブルシューティング</h2>
         <ul>
-            <li><strong>ページが見つからない場合：</strong> パーマリンク設定を保存し直してみてください</li>
+            <li><strong>404エラーが表示される場合：</strong> 「設定 > パーマリンク設定」画面で設定を保存し直してください</li>
+            <li><strong>CSVインポートでエラーが発生する場合：</strong> 
+                <ul>
+                    <li>CSVファイルの文字コードを確認してください（UTF-8推奨）</li>
+                    <li>必須フィールド（surlとsname）が入力されていることを確認してください</li>
+                    <li>テキストフィールドの長さが制限を超えていないか確認してください</li>
+                </ul>
+            </li>
+            <li><strong>画像アップロードができない場合：</strong> 
+                <ul>
+                    <li>wp-content/uploads ディレクトリの書き込み権限を確認してください</li>
+                    <li>アップロードする画像のファイルサイズが PHP の設定上限を超えていないか確認してください</li>
+                    <li>許可されているファイル形式（JPEG/PNG/GIF）かどうか確認してください</li>
+                </ul>
+            </li>
             <li><strong>データが表示されない場合：</strong> データベース接続とテーブル構造を確認してください</li>
             <li><strong>編集ページでエラーが発生する場合：</strong> surlパラメータが正しく設定されているか確認してください</li>
         </ul>
@@ -178,10 +365,22 @@ if (!defined('ABSPATH')) exit;
              alt="編集ページサンプル" style="max-width: 100%; border: 1px solid #ddd;">
     </div>
 
+    <div class="card">
+        <h2>CSVインポート/エクスポート機能</h2>
+        <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/csv-import-sample.png'; ?>" 
+             alt="CSVインポートサンプル" style="max-width: 100%; border: 1px solid #ddd;">
+    </div>
+
+    <div class="card">
+        <h2>画像アップロード機能</h2>
+        <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/image-upload-sample.png'; ?>" 
+             alt="画像アップロードサンプル" style="max-width: 100%; border: 1px solid #ddd;">
+    </div>
+
     <hr>
     <p class="description">
         このプラグインについてのサポートが必要な場合は、開発者にお問い合わせください。<br>
-        バージョン: 1.0.0
+        バージョン: 1.2.0
     </p>
 </div>
 
@@ -201,5 +400,17 @@ if (!defined('ABSPATH')) exit;
     .card h3 {
         margin-top: 20px;
         margin-bottom: 10px;
+    }
+    pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 3px;
+        overflow-x: auto;
+    }
+    code {
+        background-color: #f5f5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
     }
 </style>

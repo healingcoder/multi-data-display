@@ -34,47 +34,16 @@ get_header();
                 </h1>
             </header>
 
-            <!-- デバッグ情報を追加 (ここから) -->
-            <div class="notice notice-info">
-                <h3>デバッグ情報</h3>
-                <pre>
-<?php
-echo "========== URL情報 ==========\n";
-echo "現在のURL: " . esc_html($_SERVER['REQUEST_URI']) . "\n";
-echo "REQUEST_METHOD: " . esc_html($_SERVER['REQUEST_METHOD']) . "\n\n";
-
-echo "========== GET パラメータ ==========\n";
-print_r($_GET);
-echo "\n";
-
-echo "========== クエリ変数 ==========\n";
-echo "pagename: " . esc_html(get_query_var('pagename')) . "\n";
-echo "surl: " . esc_html(get_query_var('surl')) . "\n";
-echo "option: " . esc_html(get_query_var('option')) . "\n\n";
-
-echo "========== WP_QUERY オブジェクト ==========\n";
-global $wp_query;
-$qv = $wp_query->query_vars;
-echo "query_vars['surl']: " . (isset($qv['surl']) ? esc_html($qv['surl']) : 'not set') . "\n";
-echo "query_vars['pagename']: " . (isset($qv['pagename']) ? esc_html($qv['pagename']) : 'not set') . "\n\n";
-
-echo "========== リライトルール確認 ==========\n";
-global $wp_rewrite;
-$rules = $wp_rewrite->wp_rewrite_rules();
-foreach ($rules as $pattern => $query) {
-    if (strpos($pattern, 'area/edit') !== false) {
-        echo "Pattern: " . esc_html($pattern) . " => " . esc_html($query) . "\n";
-    }
-}
-?>
-                </pre>
-            </div>
-            <!-- デバッグ情報を追加 (ここまで) -->
-
             <div class="entry-content">
                 <?php
                 global $wpdb;
                 $table_name = $wpdb->prefix . 'shops';
+                
+                // 画像アップロードメッセージの表示
+                if (isset($_GET['message'])) {
+                    $error_detail = isset($_GET['error']) ? urldecode($_GET['error']) : '';
+                    echo mdd_display_image_upload_message($_GET['message'], $error_detail);
+                }
                 
                 // 処理メッセージの表示領域
                 if (isset($_POST['chan']) || isset($_POST['del']) || isset($_POST['add'])) {
@@ -120,66 +89,22 @@ foreach ($rules as $pattern => $query) {
                                 sanitize_text_field($_GET['surl']) : 
                                 sanitize_text_field(get_query_var('surl'));
                     
-                    echo '<div class="notice notice-info">';
-                    echo '<p>取得したshop_key: ' . esc_html($shop_key) . '</p>';
-                    echo '</div>';
-                    
-                    // データベースクエリの実行前情報
-                    echo '<div class="notice notice-info">';
-                    echo '<p>データベース検索を実行します: "SELECT * FROM ' . esc_html($table_name) . ' WHERE surl = \'' . esc_html($shop_key) . '\'"</p>';
-                    echo '</div>';
-                    
                     // プレースホルダーを正しく使用
                     $prepare_query = $wpdb->prepare("SELECT * FROM $table_name WHERE surl = %s", $shop_key);
                     $shop = $wpdb->get_row($prepare_query);
                     
-                    echo '<div class="notice notice-info">';
-                    echo '<p>実行されたクエリ: ' . esc_html($wpdb->last_query) . '</p>';
-                    echo '<p>取得結果: ' . ($shop ? 'データあり' : 'データなし') . '</p>';
-                    if ($wpdb->last_error) {
-                        echo '<p>エラー: ' . esc_html($wpdb->last_error) . '</p>';
-                    }
-                    echo '</div>';
-                    
                     if ($shop) {
                         // 変更用HTML
-                        echo '<div class="notice notice-success">';
-                        echo '<p>データが見つかりました。編集フォームを表示します。</p>';
-                        echo '</div>';
                         display_edit_form($shop);
+                        
+                        // 画像アップロードフォームを表示（データ保存後にのみ表示）
+                        echo '<div class="mdd-section">';
+                        echo '<h2 class="is-style-vk-heading-solid_black">店舗画像</h2>';
+                        echo mdd_image_upload_form($shop->surl);
+                        echo '</div>';
                     } else {
                         echo '<div class="notice notice-error">';
                         echo '<p>指定された店舗が見つかりませんでした。(surl: ' . esc_html($shop_key) . ')</p>';
-                        
-                        // テーブル構造を確認
-                        $table_check = $wpdb->get_results("SHOW TABLES LIKE '$table_name'");
-                        if (empty($table_check)) {
-                            echo '<p>テーブルが存在しません: ' . esc_html($table_name) . '</p>';
-                        } else {
-                            echo '<p>テーブルは存在します。</p>';
-                            // テーブルのカラム構造を確認
-                            $columns = $wpdb->get_results("SHOW COLUMNS FROM $table_name");
-                            echo '<p>テーブルのカラム: ';
-                            foreach ($columns as $column) {
-                                echo esc_html($column->Field) . ', ';
-                            }
-                            echo '</p>';
-                            
-                            // テーブル内のデータ件数を確認
-                            $count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
-                            echo '<p>テーブル内のデータ件数: ' . intval($count) . '</p>';
-                            
-                            // 存在するsurlの値を表示（最大10件）
-                            $surl_samples = $wpdb->get_col("SELECT surl FROM $table_name LIMIT 10");
-                            if (!empty($surl_samples)) {
-                                echo '<p>存在するsurlの例: ';
-                                foreach ($surl_samples as $sample) {
-                                    echo esc_html($sample) . ', ';
-                                }
-                                echo '</p>';
-                            }
-                        }
-                        
                         echo '</div>';
                         echo '<p><a href="' . site_url('area/list/') . '" class="button">リストに戻る</a></p>';
                     }
@@ -190,14 +115,9 @@ foreach ($rules as $pattern => $query) {
                     // デフォルトはリストページへリダイレクト
                     echo '<div class="notice notice-warning">';
                     echo '<p>URLパラメータが不足しています。</p>';
-                    echo '<p>現在のURL: ' . esc_html($_SERVER['REQUEST_URI']) . '</p>';
-                    echo '<p>必要なパラメータ: ?surl=[値] または /area/edit/[値]</p>';
                     echo '<p>リストページに戻るには下のボタンをクリックしてください。</p>';
                     echo '</div>';
                     echo '<p><a href="' . site_url('area/list/') . '" class="button button-primary">リストページに戻る</a></p>';
-                    
-                    // 自動リダイレクトはコメントアウト（デバッグ中）
-                    // echo '<script>window.location.href = "' . site_url('area/list/') . '";</script>';
                 }
                 ?>
             </div>

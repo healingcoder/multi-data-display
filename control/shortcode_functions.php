@@ -30,6 +30,7 @@ function mdd_prefecture_shortcode($atts) {
         'limit' => 10,        // 取得件数
         'orderby' => 'sname', // 並び順の項目
         'order' => 'ASC',     // 並び順（ASC/DESC）
+        'show_image' => 'yes', // 画像を表示するか
     ), $atts, 'prefecture');
 
     // WordPressのグローバル変数を使用
@@ -90,6 +91,14 @@ function mdd_prefecture_shortcode($atts) {
     foreach ($shops as $shop) {
         // 店舗カードを表示
         echo '<div class="mdd-shop-card">';
+        
+        // 画像表示（設定がyesの場合）
+        if ($atts['show_image'] === 'yes' && function_exists('mdd_get_shop_image_url')) {
+            $image_url = mdd_get_shop_image_url($shop->surl);
+            if ($image_url) {
+                echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($shop->sname) . '" class="mdd-shop-featured-image" />';
+            }
+        }
         
         // 店舗名とリンク
         echo '<div class="mdd-shop-header">';
@@ -192,10 +201,6 @@ function mdd_prefecture_shortcode($atts) {
  */
 function mdd_shortcode_styles() {
     // 既存のスタイルシートを読み込み、それに追加する形で実装
-    wp_enqueue_style('mdd-shortcode-styles', plugin_dir_url(dirname(__FILE__)) . 'assets/css/mdd-shortcode.css', array(), '1.0.0');
+    wp_enqueue_style('mdd-shortcode-styles', plugin_dir_url(dirname(__FILE__)) . 'assets/css/mdd-shortcode.css', array(), '1.2.0');
 }
-
-
-    
-
 add_action('wp_enqueue_scripts', 'mdd_shortcode_styles');

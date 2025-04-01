@@ -54,6 +54,7 @@
 .mdd-form-container input[type="text"],
 .mdd-form-container input[type="number"],
 .mdd-form-container input[type="url"],
+.mdd-form-container input[type="file"],
 .mdd-form-container select {
     width: 100%;
     max-width: 400px;
@@ -73,6 +74,43 @@
 
 .mdd-form-actions .button {
     margin-right: 10px;
+}
+
+/* CSVインポートフォーム */
+.mdd-csv-import-form {
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.mdd-csv-import-form h3 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.mdd-form-row {
+    margin-bottom: 15px;
+}
+
+.mdd-form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.mdd-form-row .description {
+    font-style: italic;
+    color: #666;
+    margin-top: 5px;
+}
+
+.mdd-form-row .button-small {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 /* 検索フォーム */
@@ -215,4 +253,84 @@ input.button.delete-shop:hover,
 
 .notice-error {
     border-left-color: #dc3232;
+}
+
+/* セクション区切り */
+.mdd-section {
+    margin: 30px 0;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* 画像アップロード関連 */
+.mdd-image-upload-form {
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.mdd-image-upload-form h3 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.mdd-current-image {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.mdd-current-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.mdd-current-image h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #23282d;
+}
+
+/* ショートコード表示用 */
+.mdd-shop-featured-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 782px) {
+    .mdd-search-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .mdd-search-box input[type="text"],
+    .mdd-search-box select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .mdd-form-container .form-table th {
+        width: 100%;
+        display: block;
+        padding: 10px;
+    }
+    
+    .mdd-form-container .form-table td {
+        width: 100%;
+        display: block;
+        padding: 10px;
+    }
 }

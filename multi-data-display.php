@@ -3,7 +3,7 @@
 Plugin Name: Multi Data Display
 Plugin URI:
 Description: オリジナルテーブルからデータを抽出して表示するプラグイン
-Version: 1.0.0
+Version: 1.2.0
 Author: HealingCode
 Author URI: https://healingcoder.com/
 License: GNU General Public License (GPL) 
@@ -20,6 +20,11 @@ register_activation_hook(__FILE__, 'mdd_activation');
 function mdd_activation() {
     require_once plugin_dir_path(__FILE__) . 'control/create_table_shop.php';
     create_custom_table();
+    
+    // 画像アップロードディレクトリを作成
+    if (function_exists('mdd_create_upload_directory')) {
+        mdd_create_upload_directory();
+    }
 }
 
 // 管理メニュー関連の処理を読み込み
@@ -31,12 +36,18 @@ require_once plugin_dir_path(__FILE__) . 'control/shop_functions.php';
 // ショートコード関連の処理を読み込み
 require_once plugin_dir_path(__FILE__) . 'control/shortcode_functions.php';
 
+// CSVインポート関連の処理を読み込み
+require_once plugin_dir_path(__FILE__) . 'control/csv_import_functions.php';
+
+// 画像アップロード関連の処理を読み込み
+require_once plugin_dir_path(__FILE__) . 'control/image_upload_functions.php';
+
 // 管理メニューが読み込まれる前に実行される admin_menuを指定します
 add_action('admin_menu', 'add_menu');
 
 // スタイルシートの登録
 function mdd_enqueue_scripts() {
-    wp_enqueue_style('mdd-styles', plugin_dir_url(__FILE__) . 'assets/css/mdd-styles.css', array(), '1.0.0');
+    wp_enqueue_style('mdd-styles', plugin_dir_url(__FILE__) . 'assets/css/mdd-styles.css', array(), '1.2.0');
 }
 add_action('wp_enqueue_scripts', 'mdd_enqueue_scripts');
 add_action('admin_enqueue_scripts', 'mdd_enqueue_scripts');

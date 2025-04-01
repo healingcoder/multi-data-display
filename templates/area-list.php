@@ -60,10 +60,66 @@ get_header();
                     $notice_class = ($delete_status == 'success') ? 'updated' : 'error';
                     echo '<div class="notice notice-' . $notice_class . ' is-dismissible"><p>' . esc_html($delete_message) . '</p></div>';
                 }
+                
+                // CSVインポート処理メッセージの表示（セッションから取得）
+                if (isset($_SESSION['csv_import_message'])) {
+                    $import_status = $_SESSION['csv_import_status'] ?? 'info';
+                    echo '<div class="notice notice-' . $import_status . ' is-dismissible"><p>' . esc_html($_SESSION['csv_import_message']) . '</p></div>';
+                    // メッセージを表示したらセッションから削除
+                    unset($_SESSION['csv_import_message']);
+                    unset($_SESSION['csv_import_status']);
+                }
                 ?>
                 
                 <div class="mdd-actions">
                     <a href="<?php echo site_url('area/edit/') . '?option=add'; ?>" class="button button-primary">新規追加</a>
+                    <button type="button" id="show-csv-import" class="button">CSVインポート</button>
+                    <a href="<?php echo admin_url('admin-post.php?action=mdd_export_data_csv&_wpnonce=' . wp_create_nonce('export_data_csv')); ?>" class="button">データをCSV出力</a>
+                </div>
+                
+                <!-- CSVインポートフォーム -->
+                <div id="csv-import-form" class="mdd-csv-import-form" style="display: none;">
+                    <h3>CSVファイルからインポート</h3>
+                    <form method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin-post.php'); ?>">
+                        <?php wp_nonce_field('csv_import_action', 'csv_import_nonce'); ?>
+                        <input type="hidden" name="action" value="mdd_csv_import">
+                        
+                        <div class="mdd-form-row">
+                            <label for="csv_file">CSVファイル:</label>
+                            <input type="file" name="csv_file" id="csv_file" accept=".csv" required>
+                            <p class="description">
+                                <a href="<?php echo admin_url('admin-post.php?action=mdd_download_sample_csv&_wpnonce=' . wp_create_nonce('download_sample_csv')); ?>" class="button button-small">サンプルCSVをダウンロード</a>
+                            </p>
+                        </div>
+                        
+                        <div class="mdd-form-row">
+                            <label for="import_mode">インポートモード:</label>
+                            <select name="import_mode" id="import_mode">
+                                <option value="append">追加のみ（既存データを残す）</option>
+                                <option value="update">更新（同一surlの場合は上書き）</option>
+                                <option value="replace">置換（全データを削除してからインポート）</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mdd-form-row">
+                            <label>
+                                <input type="checkbox" name="has_header" value="1" checked>
+                                1行目をヘッダーとして扱う
+                            </label>
+                        </div>
+                        
+                        <div class="mdd-form-row">
+                            <p class="description">
+                                CSVファイルには以下のカラムが必要です: url, sname, price, surl, area, service, copy, comment, time, tel, sogo, point, premium, type, recommended<br>
+                                ※ surlとsnameは必須です。
+                            </p>
+                        </div>
+                        
+                        <div class="mdd-form-row">
+                            <input type="submit" class="button button-primary" value="インポート">
+                            <button type="button" id="cancel-csv-import" class="button">キャンセル</button>
+                        </div>
+                    </form>
                 </div>
                 
                 <?php
@@ -74,6 +130,23 @@ get_header();
         </div>
     </main><!-- #main -->
 </div><!-- #primary -->
+
+<!-- CSVインポートフォーム表示/非表示のためのJavaScript -->
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    var showButton = document.getElementById('show-csv-import');
+    var cancelButton = document.getElementById('cancel-csv-import');
+    var importForm = document.getElementById('csv-import-form');
+    
+    showButton.addEventListener('click', function() {
+        importForm.style.display = 'block';
+    });
+    
+    cancelButton.addEventListener('click', function() {
+        importForm.style.display = 'none';
+    });
+});
+</script>
 
 <?php
 get_sidebar();
@@ -132,13 +205,29 @@ function display_shop_list_page() {
     $limit_query = $query . " LIMIT %d OFFSET %d";
     $limit_params = array_merge($where_params, array($per_page, $offset));
     
-    // データの取得
-    if (!empty($limit_params)) {
-        $shops = $wpdb->get_results($wpdb->prepare($limit_query, $limit_params));
-        $total_items = $wpdb->get_var($wpdb->prepare($count_query, $where_params));
+    // データの取得 - ここを修正（wpdb::prepare の使い方を修正）
+    if (!empty($where_params)) {
+        // PHP 5.6以上での配列展開
+        if (version_compare(PHP_VERSION, '5.6.0', '>=')) {
+            $prepared_limit_query = $wpdb->prepare($limit_query, ...$limit_params);
+            $prepared_count_query = $wpdb->prepare($count_query, ...$where_params);
+        } else {
+            // PHP 5.6未満での代替方法
+            $prepared_limit_query = call_user_func_array(
+                array($wpdb, 'prepare'),
+                array_merge(array($limit_query), $limit_params)
+            );
+            $prepared_count_query = call_user_func_array(
+                array($wpdb, 'prepare'),
+                array_merge(array($count_query), $where_params)
+            );
+        }
+        
+        $shops = $wpdb->get_results($prepared_limit_query);
+        $total_items = $wpdb->get_var($prepared_count_query);
     } else {
-        // パラメータがない場合は直接クエリ実行
-        $shops = $wpdb->get_results($query . " LIMIT $per_page OFFSET $offset");
+        // パラメータがない場合はプレースホルダーなしで直接クエリ実行
+        $shops = $wpdb->get_results($wpdb->prepare("$query LIMIT %d OFFSET %d", $per_page, $offset));
         $total_items = $wpdb->get_var($count_query);
     }
     
