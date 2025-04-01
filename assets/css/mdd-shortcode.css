@@ -1,113 +1,451 @@
-/* ショートコード用スタイル - 女性向けデザイン */
+/* ショートコード用スタイル - 店舗リストデザイン (洗練されたデザイン) */
 .mdd-shop-list-container {
     margin: 20px 0;
-    font-family: "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif;
+    font-family: "Hiragino Kaku Gothic ProN", "メイリオ", "Yu Gothic", sans-serif;
 }
 
 .mdd-shop-card {
     margin-bottom: 20px;
-    border-bottom: 1px solid #f0d2e0;
-    padding-bottom: 20px;
+    border: 1px solid #e0e0e0; /* より控えめな灰色の枠線 */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background-color: #fff;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
-.mdd-shop-header {
-    margin-bottom: 10px;
+.mdd-shop-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.mdd-shop-free-tag {
+/* タグエリア */
+.mdd-tag-area {
+    padding: 8px 10px;
+    background-color: #f8f9fa; /* より淡い灰色の背景 */
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mdd-tag {
     display: inline-block;
-    background-color: #f08bb4;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-right: 8px;
+    margin-bottom: 3px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.mdd-tag-new {
+    background-color: #e05d6f; /* 少し落ち着いた赤色 */
+}
+
+.mdd-tag-service {
+    background-color: #f0a458; /* 落ち着いたオレンジ色 */
+}
+
+/* ヘッダー部分 */
+.mdd-shop-header {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #fafafa; /* 淡いグレー */
+}
+
+.mdd-smartphone-url {
+    text-align: right;
+}
+
+.mdd-smartphone-button {
+    display: inline-block;
+    font-size: 12px;
+    text-decoration: none;
+    color: #4a6da7; /* 落ち着いた青色 */
+    background-color: #fff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.mdd-smartphone-button:hover {
+    background-color: #4a6da7;
     color: white;
-    font-size: 0.8em;
-    padding: 2px 8px;
-    border-radius: 3px;
-    margin-right: 5px;
+}
+
+.mdd-arrow {
+    font-weight: bold;
+    margin-left: 3px;
+}
+
+/* 店舗コンテンツ */
+.mdd-shop-content {
+    padding: 15px;
+}
+
+.mdd-shop-info {
+    margin-bottom: 15px;
+    border-bottom: 1px dotted #d0d0d0; /* グレーのドット線 */
+    padding-bottom: 10px;
 }
 
 .mdd-shop-name {
-    display: inline;
-    font-size: 1.3em;
-    color: #d06b9a;
-    margin: 0;
-    font-weight: normal;
+    font-size: 20px;
+    margin: 0 0 8px 0;
+    font-weight: bold;
+    color: #3a3a3a; /* 濃い灰色 */
 }
 
 .mdd-shop-name a {
-    color: #d06b9a;
+    color: #3a3a3a;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .mdd-shop-name a:hover {
+    color: #4a6da7; /* 青色にホバー */
     text-decoration: underline;
 }
 
-.mdd-shop-content {
-    margin-left: 10px;
+.mdd-shop-subtitle {
+    font-size: 13px;
+    color: #666;
+    margin-left: 2px;
+    line-height: 1.4;
 }
 
-.mdd-divider {
-    border: 0;
-    height: 1px;
-    background: #f0e0e9;
-    margin: 10px 0;
+/* 店舗上部情報 */
+.mdd-shop-details-top {
+    display: flex;
+    margin-bottom: 18px;
 }
 
-.mdd-shop-details > div {
-    margin-bottom: 5px;
+.mdd-shop-image-container {
+    width: 135px;
+    margin-right: 18px;
+}
+
+.mdd-shop-featured-image {
+    width: 100%;
+    height: auto;
+    border-radius: 6px; /* 控えめな丸み */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.mdd-shop-featured-image:hover {
+    transform: scale(1.02);
+}
+
+.mdd-shop-basic-info {
+    flex: 1;
+    font-size: 14px;
     line-height: 1.6;
+    padding: 5px 0;
 }
 
-.mdd-label {
-    color: #8e7186;
-    font-weight: normal;
+.mdd-shop-address, .mdd-shop-beds, .mdd-shop-time {
+    margin-bottom: 8px;
+    padding-left: 2px;
+}
+
+.mdd-icon {
     display: inline-block;
-    width: 80px;
+    width: 20px;
+    text-align: center;
+    margin-right: 6px;
+    color: #4a6da7; /* 青色アイコン */
+    font-size: 16px;
 }
 
 .mdd-value {
-    color: #333;
+    color: #444;
 }
 
-.mdd-shop-rating {
-    margin-bottom: 5px;
+/* メイン情報エリア */
+.mdd-shop-main-info {
+    display: flex;
+    border-top: 1px dashed #e0e0e0; /* 灰色の点線 */
+    padding-top: 15px;
+    margin-top: 5px;
 }
 
-.mdd-star {
-    color: #ffb1d8;
-    letter-spacing: 1px;
+.mdd-shop-description {
+    flex: 3;
+    margin-right: 20px;
 }
 
-.mdd-star-empty {
-    color: #f0e0e9;
+.mdd-shop-catch {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: #444;
+    padding: 10px;
+    background-color: #f7f9fb; /* 薄い青灰色の背景 */
+    border-radius: 6px;
+    border-left: 3px solid #d0dce9; /* 薄い青色のボーダー */
+}
+
+.mdd-shop-review {
+    margin-bottom: 15px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #eaeaea;
+}
+
+.mdd-review-label {
+    font-weight: bold;
+    margin-right: 5px;
+    color: #4a6da7; /* 青色 */
+    position: relative;
+    padding-left: 18px;
+}
+
+.mdd-review-label:before {
+    content: "★";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #4a6da7;
 }
 
 .mdd-rating-value {
-    margin-left: 5px;
-    color: #b37a9e;
     font-weight: bold;
+    color: #f0a458; /* オレンジ色 */
+    font-size: 16px;
 }
 
-.mdd-shop-recommended {
+.mdd-review-count {
+    color: #777;
+    font-size: 12px;
+}
+
+.mdd-star-rating {
+    margin-top: 5px;
+}
+
+.mdd-star {
+    color: #f0a458; /* オレンジ色の星 */
+    letter-spacing: 2px;
+    font-size: 16px;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.mdd-star-empty {
+    color: #e0e0e0;
+}
+
+/* オススメポイント */
+.mdd-popular-menu {
     margin-top: 15px;
-    padding: 10px;
-    background-color: #fdf8fb;
-    border-left: 3px solid #f8e1ee;
+    font-size: 14px;
+    background-color: #f7f7f7;
+    padding: 12px 15px;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
 }
 
-.mdd-shop-recommended h4 {
+.mdd-menu-title {
+    font-size: 15px;
+    font-weight: bold;
     margin: 0 0 10px 0;
-    color: #d06b9a;
-    font-size: 1em;
-    font-weight: normal;
+    color: #4a6da7; /* 青色 */
+    position: relative;
+    padding-left: 22px;
+    /* 縦棒を消すための設定 */
+    border-left: none !important;
 }
 
-.mdd-heart-icon {
-    color: #f591bc;
+/* WordPressテーマが追加する可能性のあるスタイルも上書き */
+.post_content h4.mdd-menu-title,
+.entry-content h4.mdd-menu-title,
+.content h4.mdd-menu-title,
+h4.mdd-menu-title:where(:not([class^="swell-block-"]):not(.faq_q):not(.p-postList__title)) {
+    border-left: none !important;
+}
+
+.mdd-menu-item {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 15px;
+    line-height: 1.5;
+}
+
+.mdd-menu-item:before {
+    content: "•";
+    position: absolute;
+    left: 2px;
+    top: -1px;
+    color: #777;
+    font-size: 18px;
+}
+
+/* 価格情報 */
+.mdd-shop-price-info {
+    flex: 2;
+    border-left: 1px dashed #e0e0e0; /* 灰色の点線 */
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mdd-price-box {
+    margin-bottom: 10px;
+    background-color: #f7f9fb; /* 薄い青灰色 */
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.mdd-discount-rate {
+    display: inline-block;
+    background-color: #e05d6f; /* 落ち着いた赤色 */
+    color: white;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.mdd-discount-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e05d6f; /* 落ち着いた赤色 */
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.mdd-regular-price {
+    font-size: 14px;
+    color: #888;
+    text-decoration: line-through;
+}
+
+.mdd-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #e05d6f;
+}
+
+/* ブログリンク */
+.mdd-blog-link {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.mdd-blog-button {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    color: #4a6da7; /* 青色 */
+    text-decoration: none;
+    background-color: #fff;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid #d0dce9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.mdd-blog-button:hover {
+    background-color: #f5f7fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.mdd-blog-icon {
     margin-right: 5px;
+    color: #4a6da7;
 }
 
-.mdd-shop-recommended p {
-    margin: 0;
-    line-height: 1.6;
-    color: #555;
+.mdd-blog-count {
+    margin: 0 5px;
+    color: #777;
+}
+
+.mdd-blog-new {
+    font-size: 10px;
+    background-color: #e05d6f; /* 落ち着いた赤色 */
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* 管理者用編集ボタン */
+.mdd-edit-button {
+    display: inline-block;
+    font-size: 12px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4a6da7; /* 青色 */
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-left: 10px;
+    border: 1px solid #3a5a8c;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.mdd-edit-button:hover {
+    background-color: #3a5a8c;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* ヘッダー内のボタン配置調整 */
+.mdd-smartphone-url {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .mdd-shop-details-top {
+        flex-direction: column;
+    }
+    
+    .mdd-shop-image-container {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .mdd-shop-featured-image {
+        max-width: 80%;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    .mdd-shop-main-info {
+        flex-direction: column;
+    }
+    
+    .mdd-shop-description {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .mdd-shop-price-info {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px dashed #e0e0e0;
+        padding-top: 20px;
+    }
 }

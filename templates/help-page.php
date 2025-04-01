@@ -48,6 +48,15 @@ if (!defined('ABSPATH')) exit;
         <div class="notice notice-warning inline">
             <p><strong>注意：</strong> データを削除する場合は慎重に行ってください。削除後は元に戻せません。</p>
         </div>
+
+        <h3>4. フロントエンド編集機能</h3>
+        <p>
+            新機能として、管理者がログインしている場合は、フロントエンドのショートコード表示でも各店舗データの横に「編集」ボタンが表示されるようになりました。
+            これにより、管理画面に移動することなく、直接店舗データを編集できます。
+        </p>
+        <div class="notice notice-info inline">
+            <p><strong>メモ：</strong> この編集ボタンは管理者がログインしている場合のみ表示され、一般ユーザーには表示されません。</p>
+        </div>
     </div>
 
     <div class="card">
@@ -142,6 +151,76 @@ if (!defined('ABSPATH')) exit;
     </div>
 
     <div class="card">
+        <h2>ショートコードの使い方</h2>
+        <p>WordPressの投稿や固定ページ内で店舗情報を表示するには、<code>[prefecture]</code>ショートコードを使用します。</p>
+        
+        <h3>基本的な使い方</h3>
+        <pre><code>[prefecture]</code></pre>
+        <p>これにより、デフォルト設定で店舗一覧が表示されます。デフォルトでは、「相互フォロー」「ポイント」「プレミアム」の合計が大きい順に表示されます。</p>
+        
+        <h3>パラメータ一覧</h3>
+        <table class="widefat striped">
+            <thead>
+                <tr>
+                    <th>パラメータ</th>
+                    <th>説明</th>
+                    <th>例</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>area</code></td>
+                    <td>エリアで絞り込み</td>
+                    <td><code>[prefecture area="東京"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>service</code></td>
+                    <td>サービスで絞り込み</td>
+                    <td><code>[prefecture service="マッサージ"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>type</code></td>
+                    <td>タイプで絞り込み (0, 1, 2)</td>
+                    <td><code>[prefecture type="1"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>premium</code></td>
+                    <td>プレミアム値で絞り込み</td>
+                    <td><code>[prefecture premium="1"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>limit</code></td>
+                    <td>表示件数（デフォルト: 10）</td>
+                    <td><code>[prefecture limit="20"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>orderby</code></td>
+                    <td>並び順のフィールド (sname, area, service, sogo, point, premium, type, score)</td>
+                    <td><code>[prefecture orderby="point"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>order</code></td>
+                    <td>並び順 (ASC, DESC)</td>
+                    <td><code>[prefecture orderby="point" order="DESC"]</code></td>
+                </tr>
+                <tr>
+                    <td><code>show_image</code></td>
+                    <td>店舗画像を表示するか (yes, no)</td>
+                    <td><code>[prefecture show_image="yes"]</code></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>複合条件の例</h3>
+        <pre><code>[prefecture area="大阪" service="エステ" limit="5" orderby="score" order="DESC" show_image="yes"]</code></pre>
+        <p>この例では、大阪エリアのエステサービスを提供する店舗を、総合スコア（相互フォロー+ポイント+プレミアム）の高い順に最大5件表示します。各店舗の画像も表示されます。</p>
+        
+        <div class="notice notice-info inline">
+            <p><strong>新機能：</strong> デフォルトの並び順が変更され、「相互フォロー」「ポイント」「プレミアム」の合計値（score）が大きい順に表示されるようになりました。また、管理者がログインしている場合は各店舗の表示に編集ボタンが表示されます。</p>
+        </div>
+    </div>
+
+    <div class="card">
         <h2>データ構造について</h2>
         <table class="widefat striped">
             <thead>
@@ -232,72 +311,6 @@ if (!defined('ABSPATH')) exit;
     </div>
 
     <div class="card">
-        <h2>ショートコードの使い方</h2>
-        <p>WordPressの投稿や固定ページ内で店舗情報を表示するには、<code>[prefecture]</code>ショートコードを使用します。</p>
-        
-        <h3>基本的な使い方</h3>
-        <pre><code>[prefecture]</code></pre>
-        <p>これにより、デフォルト設定（最大10件）で店舗一覧が表示されます。</p>
-        
-        <h3>パラメータ一覧</h3>
-        <table class="widefat striped">
-            <thead>
-                <tr>
-                    <th>パラメータ</th>
-                    <th>説明</th>
-                    <th>例</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>area</code></td>
-                    <td>エリアで絞り込み</td>
-                    <td><code>[prefecture area="東京"]</code></td>
-                </tr>
-                <tr>
-                    <td><code>service</code></td>
-                    <td>サービスで絞り込み</td>
-                    <td><code>[prefecture service="マッサージ"]</code></td>
-                </tr>
-                <tr>
-                    <td><code>type</code></td>
-                    <td>タイプで絞り込み (0, 1, 2)</td>
-                    <td><code>[prefecture type="1"]</code></td>
-                </tr>
-                <tr>
-                    <td><code>premium</code></td>
-                    <td>プレミアム値で絞り込み</td>
-                    <td><code>[prefecture premium="1"]</code></td>
-                </tr>
-                <tr>
-                    <td><code>limit</code></td>
-                    <td>表示件数（デフォルト: 10）</td>
-                    <td><code>[prefecture limit="20"]</code></td>
-                </tr>
-                <tr>
-                    <td><code>orderby</code></td>
-                    <td>並び順のフィールド (sname, area, service, sogo, point, premium, type)</td>
-                    <td><code>[prefecture orderby="point"]</code></td>
-                </tr>
-                <tr>
-                    <td><code>order</code></td>
-                    <td>並び順 (ASC, DESC)</td>
-                    <td><code>[prefecture orderby="point" order="DESC"]</code></td>
-                </tr>
-                <tr>
-                    <td><code>show_image</code></td>
-                    <td>店舗画像を表示するか (yes, no)</td>
-                    <td><code>[prefecture show_image="yes"]</code></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <h3>複合条件の例</h3>
-        <pre><code>[prefecture area="大阪" service="エステ" limit="5" orderby="point" order="DESC" show_image="yes"]</code></pre>
-        <p>この例では、大阪エリアのエステサービスを提供する店舗を、ポイントの高い順に最大5件表示します。各店舗の画像も表示されます。</p>
-    </div>
-
-    <div class="card">
         <h2>URL構造</h2>
         <ul>
             <li><code><?php echo site_url('area/list/'); ?></code> - データ一覧ページ</li>
@@ -312,22 +325,6 @@ if (!defined('ABSPATH')) exit;
             データが多い場合は自動的にページ分割されます (1ページあたり20件)。
             ページの下部にあるページネーションリンクで別のページに移動できます。
         </p>
-    </div>
-
-    <div class="card">
-        <h2>他ドメインへの移行方法</h2>
-        <p>
-            このプラグインを別のWordPressサイトに移行する場合は、以下の手順に従ってください：
-        </p>
-        <ol>
-            <li><strong>データのエクスポート</strong>: 現在のサイトで「データをCSV出力」ボタンを使用してデータをエクスポートします</li>
-            <li><strong>画像のバックアップ</strong>: wp-content/uploads/mdd-images/ ディレクトリにある画像ファイルをバックアップします</li>
-            <li><strong>プラグインのコピー</strong>: プラグインのディレクトリ全体を新しいサイトのwp-content/pluginsディレクトリにコピーします</li>
-            <li><strong>プラグインの有効化</strong>: 新しいサイトでプラグインを有効化します</li>
-            <li><strong>画像の復元</strong>: バックアップした画像ファイルを新しいサイトのwp-content/uploads/mdd-images/ディレクトリにコピーします</li>
-            <li><strong>パーマリンク設定の更新</strong>: 管理画面の「設定 > パーマリンク設定」に移動し、「変更を保存」ボタンをクリックします</li>
-            <li><strong>データのインポート</strong>: 新しいサイトでCSVインポート機能を使用して、先ほどエクスポートしたデータをインポートします</li>
-        </ol>
     </div>
 
     <div class="card">
@@ -349,38 +346,14 @@ if (!defined('ABSPATH')) exit;
                 </ul>
             </li>
             <li><strong>データが表示されない場合：</strong> データベース接続とテーブル構造を確認してください</li>
-            <li><strong>編集ページでエラーが発生する場合：</strong> surlパラメータが正しく設定されているか確認してください</li>
+            <li><strong>編集ボタンが表示されない場合：</strong> ユーザーが管理者としてログインしているか確認してください</li>
         </ul>
-    </div>
-
-    <div class="card">
-        <h2>リストページのスクリーンショット</h2>
-        <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/list-page-sample.png'; ?>" 
-             alt="リストページサンプル" style="max-width: 100%; border: 1px solid #ddd;">
-    </div>
-
-    <div class="card">
-        <h2>編集ページのスクリーンショット</h2>
-        <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/edit-page-sample.png'; ?>" 
-             alt="編集ページサンプル" style="max-width: 100%; border: 1px solid #ddd;">
-    </div>
-
-    <div class="card">
-        <h2>CSVインポート/エクスポート機能</h2>
-        <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/csv-import-sample.png'; ?>" 
-             alt="CSVインポートサンプル" style="max-width: 100%; border: 1px solid #ddd;">
-    </div>
-
-    <div class="card">
-        <h2>画像アップロード機能</h2>
-        <img src="<?php echo plugin_dir_url(dirname(__FILE__)) . 'assets/images/image-upload-sample.png'; ?>" 
-             alt="画像アップロードサンプル" style="max-width: 100%; border: 1px solid #ddd;">
     </div>
 
     <hr>
     <p class="description">
         このプラグインについてのサポートが必要な場合は、開発者にお問い合わせください。<br>
-        バージョン: 1.2.0
+        バージョン: 1.2.1
     </p>
 </div>
 
