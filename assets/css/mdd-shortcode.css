@@ -27,6 +27,7 @@
     border-bottom: 1px solid #eaeaea;
     display: flex;
     flex-wrap: wrap;
+    align-items: center; /* 垂直方向に中央揃え */
 }
 
 .mdd-tag {
@@ -36,10 +37,13 @@
     border-radius: 12px;
     margin-right: 8px;
     margin-bottom: 3px;
+    margin-top: 3px; /* 上の余白も追加 */
     color: #fff;
     font-weight: bold;
     letter-spacing: 0.5px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    line-height: 1.2; /* 行の高さを明示的に設定 */
+    vertical-align: middle; /* 垂直方向の配置を中央に */
 }
 
 .mdd-tag-new {
@@ -48,6 +52,19 @@
 
 .mdd-tag-service {
     background-color: #f0a458; /* 落ち着いたオレンジ色 */
+}
+
+.mdd-tag-updated {
+    background-color: #17a2b8; /* 青緑色 */
+}
+
+/* タイプに応じたタグのスタイル */
+.mdd-tag-type-1 {
+    background-color: #FF69B4; /* ピンク色 - 女性風俗 */
+}
+
+.mdd-tag-type-2 {
+    background-color: #2ECC71; /* 緑色 - 無料 */
 }
 
 /* ヘッダー部分 */
@@ -125,11 +142,15 @@
 .mdd-shop-details-top {
     display: flex;
     margin-bottom: 18px;
+    flex-direction: row; /* 明示的に横方向の配置を指定 */
+    align-items: flex-start; /* 上端揃え */
 }
 
 .mdd-shop-image-container {
     width: 135px;
     margin-right: 18px;
+    flex-shrink: 0; /* 画像のサイズを固定 */
+    order: 1; /* 左側に配置 */
 }
 
 .mdd-shop-featured-image {
@@ -149,6 +170,14 @@
     font-size: 14px;
     line-height: 1.6;
     padding: 5px 0;
+    order: 2; /* 右側に配置 */
+}
+
+/* サービス情報のスタイル */
+.mdd-shop-service {
+    margin-bottom: 8px;
+    padding-left: 2px;
+    font-weight: bold; /* サービス情報を強調表示 */
 }
 
 .mdd-shop-address, .mdd-shop-beds, .mdd-shop-time {
@@ -415,6 +444,31 @@ h4.mdd-menu-title:where(:not([class^="swell-block-"]):not(.faq_q):not(.p-postLis
     justify-content: flex-end;
 }
 
+/* 新規登録ボタン用のスタイル */
+.mdd-admin-actions {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.mdd-add-button {
+    display: inline-block;
+    font-size: 14px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #28a745;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.mdd-add-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
     .mdd-shop-details-top {
@@ -425,12 +479,18 @@ h4.mdd-menu-title:where(:not([class^="swell-block-"]):not(.faq_q):not(.p-postLis
         width: 100%;
         margin-right: 0;
         margin-bottom: 15px;
+        order: 1;
     }
     
     .mdd-shop-featured-image {
         max-width: 80%;
         margin: 0 auto;
         display: block;
+    }
+    
+    .mdd-shop-basic-info {
+        width: 100%;
+        order: 2;
     }
     
     .mdd-shop-main-info {

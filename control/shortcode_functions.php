@@ -85,6 +85,13 @@ function mdd_prefecture_shortcode($atts) {
     // 出力バッファを開始
     ob_start();
     
+    // 新規登録ボタンの表示（管理者がログインしている場合のみ）
+    if (current_user_can('administrator')) {
+        echo '<div class="mdd-admin-actions">';
+        echo '<a href="' . site_url('area/edit/') . '?option=add" class="mdd-add-button" target="_blank">新規店舗登録</a>';
+        echo '</div>';
+    }
+    
     // 店舗リストの表示
     echo '<div class="mdd-shop-list-container">';
     
@@ -94,27 +101,35 @@ function mdd_prefecture_shortcode($atts) {
         
         // タグエリアの表示（上部の赤やオレンジのタグ）
         echo '<div class="mdd-tag-area">';
+        
         // 新規タグ - 追加から30日以内の場合に表示
         $created_date = isset($shop->created_at) ? strtotime($shop->created_at) : 0;
         $days_since_creation = $created_date > 0 ? (time() - $created_date) / (60 * 60 * 24) : 999;
+        $is_new = false;
+        
         if ($days_since_creation <= 30) {
             echo '<span class="mdd-tag mdd-tag-new">新規</span>';
+            $is_new = true;
         }
         
-        // カテゴリタグ表示 - エステ/リラク/整体・カイロ等
-        $services = explode(',', $shop->service);
-        $service_tags = array(
-            'エステ' => 'エステ',
-            'リラク' => 'リラク',
-            '整体' => '整体・カイロ',
-            'カイロ' => '整体・カイロ',
-            'メンズ' => 'メンズOK'
-        );
-        
-        foreach ($service_tags as $keyword => $tag) {
-            if (stripos($shop->service, $keyword) !== false) {
-                echo '<span class="mdd-tag mdd-tag-service">' . esc_html($tag) . '</span>';
+        // 更新タグ - 新規でなく、更新から30日以内の場合に表示
+        if (!$is_new && isset($shop->update_at)) {
+            $update_date = strtotime($shop->update_at);
+            $days_since_update = (time() - $update_date) / (60 * 60 * 24);
+            
+            if ($days_since_update <= 30) {
+                echo '<span class="mdd-tag mdd-tag-updated">情報更新</span>';
             }
+        }
+        
+        // タイプに応じたタグ表示
+        if (isset($shop->type)) {
+            if ($shop->type == 1) {
+                echo '<span class="mdd-tag mdd-tag-type-1">女性風俗</span>';
+            } elseif ($shop->type == 2) {
+                echo '<span class="mdd-tag mdd-tag-type-2">無料</span>';
+            }
+            // type=0の場合は何も表示しない
         }
         
         echo '</div>'; // .mdd-tag-area
@@ -126,7 +141,7 @@ function mdd_prefecture_shortcode($atts) {
         
         // 管理者用編集ボタン（管理者がログインしている場合のみ表示）
         if (current_user_can('administrator')) {
-            echo '<a href="' . site_url('area/edit/' . urlencode($shop->surl)) . '" class="mdd-edit-button">編集</a>';
+            echo '<a href="' . site_url('area/edit/' . urlencode($shop->surl)) . '" class="mdd-edit-button" target="_blank">編集</a>';
         }
         
         echo '</div>';
@@ -162,11 +177,19 @@ function mdd_prefecture_shortcode($atts) {
         // 店舗基本情報
         echo '<div class="mdd-shop-basic-info">';
         
+        // サービス情報（serviceフィールドを表示）
+        if (!empty($shop->service)) {
+            echo '<div class="mdd-shop-service">';
+            echo '<span class="mdd-icon">💼</span> ';
+            echo '<span class="mdd-value">' . esc_html($shop->service) . '</span>';
+            echo '</div>';
+        }
+        
         // 住所情報
         if (!empty($shop->area)) {
             echo '<div class="mdd-shop-address">';
             echo '<span class="mdd-icon">📍</span> ';
-            echo '<span class="mdd-value">' . esc_html('阪急京都本線 河原町駅 ' . $shop->area) . '</span>';
+            echo '<span class="mdd-value">' . esc_html($shop->area) . '</span>';
             echo '</div>';
         }
         
